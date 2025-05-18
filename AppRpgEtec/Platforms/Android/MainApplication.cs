@@ -3,7 +3,7 @@ using Android.Runtime;
 
 namespace AppRpgEtec
 {
-    [Application]
+    [Application(UsesClearTextTraffic=true)]
     public class MainApplication : MauiApplication
     {
         public MainApplication(IntPtr handle, JniHandleOwnership ownership)
@@ -12,5 +12,7 @@ namespace AppRpgEtec
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+        
     }
 }
