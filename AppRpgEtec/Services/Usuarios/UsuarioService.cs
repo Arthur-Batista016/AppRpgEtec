@@ -11,7 +11,7 @@ namespace AppRpgEtec.Services.Usuarios
     {
         private readonly Request _request;
 
-        private const string apiUrlBase = "https://xyz.azurewebsites.net/Usuarios";
+        private const string apiUrlBase = "https://rpgarthurgabriel.azurewebsites.net/Usuarios";
 
         public UsuarioService()
         {
@@ -30,6 +30,7 @@ namespace AppRpgEtec.Services.Usuarios
         {
             string urlComplementar = "/Autenticar";
             u = await _request.PostAsync(apiUrlBase + urlComplementar , u, string.Empty);
+            return u;
         }
 
     }
