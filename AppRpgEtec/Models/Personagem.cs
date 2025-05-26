@@ -7,7 +7,7 @@ using AppRpgEtec.Models.Enuns;
 
 namespace AppRpgEtec.Models
 {
-    public class Personagens
+    public class Personagem
     {
         public int Id { get; set; }
         public int Nome { get; set; }
