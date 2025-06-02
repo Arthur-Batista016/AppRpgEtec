@@ -1,5 +1,6 @@
 ﻿using AppRpgEtec.Models;
 using AppRpgEtec.Services.Usuarios;
+using AppRpgEtec.Views.Personagens;
 using AppRpgEtec.Views.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -80,7 +81,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
 
                     await Application.Current.MainPage.DisplayAlert("Informação", mensagem, "OK");
 
-                    Application.Current.MainPage = new MainPage();
+                    Application.Current.MainPage = new ListagemView();
 
 
                 }

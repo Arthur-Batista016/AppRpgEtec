@@ -12,7 +12,7 @@ namespace AppRpgEtec.Services.Personagens
     public class PersonagemService : Request
     {
         private readonly Request _request;
-        private const string apiUrlBase = "https://xyz.azurewebsites.net/Personagens";
+        private const string apiUrlBase = "https://rpgarthurgabriel.azurewebsites.net/Personagens";
         //xyz-->sitedasuaAPI
 
         private string _token;
@@ -29,7 +29,7 @@ namespace AppRpgEtec.Services.Personagens
 
         public async Task<ObservableCollection<Personagem>> GetPersonagemsAsync()
         {
-            string urlComplementar = string.Format("{0", "/Getall");
+            string urlComplementar = string.Format("{0}", "/Getall");
             ObservableCollection<Models.Personagem> listaPersonagens = await _request.GetAsync<ObservableCollection<Models.Personagem>>(apiUrlBase + urlComplementar, _token);
             return listaPersonagens;
         }
@@ -49,7 +49,7 @@ namespace AppRpgEtec.Services.Personagens
             public async Task<int> DeletePersonagemAsync (int personagemId)
             {
                 string urlComplementar = string.Format("/{0}", personagemId);
-                var result = await _request.DeleteAsync(apiUrlBase, urlComplementar, _token);
+                var result = await _request.DeleteAsync(apiUrlBase +  urlComplementar, _token);
                 return result;
             }
       }

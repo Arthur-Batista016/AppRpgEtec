@@ -9,17 +9,37 @@ using AppRpgEtec.Services.Personagens;
 
 namespace AppRpgEtec.ViewModels.Personagens
 {
-    public class ListagemPersonagemViewModel: BaseViewModel
+    public class ListagemPersonagemViewModel : BaseViewModel
     {
         private PersonagemService pService;
 
-        public ObservableCollection<Personagem> personagens {  get; set; }
+        public ObservableCollection<Personagem> Personagens { get; set; }
 
         public ListagemPersonagemViewModel()
         {
-            string token = Preferences.Get("UsuarioToken",string.Empty);
-            pService =new PersonagemService(token);
+            string token = Preferences.Get("UsuarioToken", string.Empty);
+            pService = new PersonagemService(token);
             Personagens = new ObservableCollection<Personagem>();
+
+            _ = ObterPersonagens();
         }
+
+        public async Task ObterPersonagens()
+        {
+            try
+            {
+                Personagens = await pService.GetPersonagemsAsync();
+                onPropertyChanged(nameof(Personagens));
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.Message, "ok");
+
+            }
+        }
+
+       
+    
+
     }
 }
