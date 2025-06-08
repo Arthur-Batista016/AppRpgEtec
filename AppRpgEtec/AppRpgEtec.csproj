@@ -69,6 +69,9 @@
 	  <None Update="Views\LoginView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </None>
+	  <None Update="Views\Personagens\CadastroPersonagemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace AppRpgEtec.Models
 {
-    internal class TipoClasse
+    public class TipoClasse
     {
+        public int Id { get; set; }
+        public string Descricao { get; set; }
     }
 }

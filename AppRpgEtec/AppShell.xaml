@@ -3,13 +3,14 @@
     x:Class="AppRpgEtec.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewsPersonagens="clr-namespace:AppRpgEtec.Views.Personagens"
     xmlns:local="clr-namespace:AppRpgEtec"
     Shell.FlyoutBehavior="Flyout"
     Title="AppRpgEtec">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        ContentTemplate="{DataTemplate viewsPersonagens:ListagemView}"
         Route="MainPage" />
 
 </Shell>
