@@ -6,5 +6,3 @@ Repositório criado para a matéria de PAM2, utilizando a API:  "RPG API", junta
 ARTHUR BONVECCHIO BATISTA E GABRIEL WHANDERSON SILVA DE CASTRO
 
 
-**LISTAGEM DOS PERSONAGENS**
- ![Página Inicial](Imagens/listagem.PNG)
