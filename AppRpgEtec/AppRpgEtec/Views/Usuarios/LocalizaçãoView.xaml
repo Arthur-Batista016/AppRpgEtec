@@ -8,7 +8,7 @@
     <Grid>
         <HorizontalStackLayout Grid.Row="0" Padding="100">
             <Entry Placeholder="cep"/>
-            <Button Command="{Binding GetEnderecoCommand}"/>
+            <Button Text="procurar" Command="{Binding GetEnderecoCommand}"/>
         </HorizontalStackLayout>
     
     
