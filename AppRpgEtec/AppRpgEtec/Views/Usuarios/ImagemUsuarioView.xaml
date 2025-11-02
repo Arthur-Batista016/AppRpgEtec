@@ -29,6 +29,6 @@
             </Grid>
             <Image WidthRequest="400" HeightRequest="400" Margin="20" Source="{Binding Foto,Converter={StaticResource ByteArrayToImage}}"/>
         </VerticalStackLayout>
-       
+
     </ScrollView>
- 
+</ContentPage>

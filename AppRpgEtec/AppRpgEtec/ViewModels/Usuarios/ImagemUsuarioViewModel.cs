@@ -10,10 +10,10 @@ using Azure.Storage.Blobs;
 
 namespace AppRpgEtec.ViewModels.Usuarios
 {
-    public class ImagemUsuarioViewModel:BaseViewModel
+    public class ImagemUsuarioViewModel : BaseViewModel
     {
         private UsuarioService uService;
-        private static string conexaoAzureStorage = "";
+        private static string conexaoAzureStorage = "DefaultEndpointsProtocol=https;AccountName=rpgapistorage;AccountKey=2oSyHIfSq2Pw3zcjOsGE0oI7DQV4PIdzT2wBIQ3Lncvj4E2FRvSd3t3pPVwMxlz0pfk1lUZVc6CZ+AStOFENCw==;EndpointSuffix=core.windows.net";
         private static string container = "arquivos";//nome do container criado
 
         public ImagemUsuarioViewModel()
@@ -30,7 +30,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
 
         public ICommand FotografarCommand { get; }
         public ICommand SalvarImagemCommand { get; }
-        public ICommand AbrirGaleriaCommand{ get; }
+        public ICommand AbrirGaleriaCommand { get; }
 
         private ImageSource fonteImagem;
         public ImageSource FontImagem
@@ -117,7 +117,8 @@ namespace AppRpgEtec.ViewModels.Usuarios
                 }
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
                 await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.InnerException, "Ok");
 
@@ -176,7 +177,9 @@ namespace AppRpgEtec.ViewModels.Usuarios
                 }
 
 
-            } catch (Exception ex) { 
+            }
+            catch (Exception ex)
+            {
                 await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.InnerException, "Ok");
 
             }
@@ -184,4 +187,5 @@ namespace AppRpgEtec.ViewModels.Usuarios
 
 
         }
+    }
 }

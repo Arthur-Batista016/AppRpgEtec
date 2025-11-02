@@ -14,7 +14,7 @@ namespace AppRpgEtec
             BindingContext = viewModel;
 
             string login =  Preferences.Get("UsuarioUsername", string.Empty);
-            lblLogin.Text = login;
+            lblLogin.Text = $"Login:{login}";
 
 
             Routing.RegisterRoute("cadPersonagemView", typeof(CadastroPersonagemView));
