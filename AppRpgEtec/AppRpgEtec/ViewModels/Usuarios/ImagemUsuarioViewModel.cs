@@ -21,9 +21,9 @@ namespace AppRpgEtec.ViewModels.Usuarios
             string token = Preferences.Get("UsuarioToken", string.Empty);
             uService = new UsuarioService(token);
 
-            FotografarCommand = new Command(Fotografar);
             SalvarImagemCommand = new Command(SalvarImagemAzure);
-            AbrirGaleriaCommand = new Command(AbrirGaleria);
+            FotografarCommand = new Command(async () => await Fotografar());
+            AbrirGaleriaCommand = new Command(async () => await AbrirGaleria());
 
             CarregarUsuarioAzure();
         }
@@ -66,30 +66,40 @@ namespace AppRpgEtec.ViewModels.Usuarios
         }
 
 
-        public async void Fotografar()
+        // preferível: async Task ao invés de async void
+        public async Task AbrirGaleria()
         {
             try
             {
-                FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
                 if (photo == null)
                 {
-                    if (MediaPicker.Default.IsCaptureSupported)
-                    {
-                        using (Stream sourceStrem = await photo.OpenReadAsync())
-                        {
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                await sourceStrem.CopyToAsync(ms);
-                                Foto = ms.ToArray();
-                                fonteImagem = ImageSource.FromStream(() => new MemoryStream());
-                            }
-                        }
-                    }
+                    // usuário cancelou — nada a fazer
+                    return;
                 }
+
+                // leia os bytes dentro de um using (stream original será fechado)
+                byte[] fileBytes;
+                using (var sourceStream = await photo.OpenReadAsync())
+                using (var ms = new MemoryStream())
+                {
+                    await sourceStream.CopyToAsync(ms);
+                    fileBytes = ms.ToArray();
+                }
+
+                // guarde na propriedade (você já tem a propriedade Foto como byte[])
+                Foto = fileBytes;
+
+                // crie a ImageSource com uma factory que gera um MemoryStream novo a partir dos bytes
+                FonteImagem = ImageSource.FromStream(() => new MemoryStream(fileBytes));
+
+                // notifique propriedades (supondo que FonteImagem tem setter com OnPropertyChanged)
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.InnerException, "Ok");
+                // ex.InnerException pode ser null
+                string details = ex.InnerException?.Message ?? "";
+                await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + " Detalhes: " + details, "Ok");
             }
         }
 
@@ -111,10 +121,11 @@ namespace AppRpgEtec.ViewModels.Usuarios
                 if (blobClient.Exists())
                     blobClient.Delete();
 
-                using (var stream = new MemoryStream())
+                using (var stream = new MemoryStream(foto))
                 {
-                    blobClient.Upload(stream);
+                    blobClient.Upload(stream, overwrite: true);
                 }
+
 
             }
             catch (Exception ex)
@@ -128,30 +139,32 @@ namespace AppRpgEtec.ViewModels.Usuarios
         }
 
 
-        public async void AbrirGaleria()
+
+        public async Task Fotografar()
         {
             try
             {
-                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+                var photo = await MediaPicker.Default.CapturePhotoAsync();
                 if (photo == null)
+                    return;
+
+                byte[] fileBytes;
+                using (var sourceStream = await photo.OpenReadAsync())
+                using (var ms = new MemoryStream())
                 {
-                    if (MediaPicker.Default.IsCaptureSupported)
-                    {
-                        using (Stream sourceStrem = await photo.OpenReadAsync())
-                        {
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                await sourceStrem.CopyToAsync(ms);
-                                Foto = ms.ToArray();
-                                fonteImagem = ImageSource.FromStream(() => new MemoryStream());
-                            }
-                        }
-                    }
+                    await sourceStream.CopyToAsync(ms);
+                    fileBytes = ms.ToArray();
                 }
+
+                Foto = fileBytes;
+
+                // ✅ Cria uma nova instância de stream a cada acesso
+                FonteImagem = ImageSource.FromStream(() => new MemoryStream(fileBytes));
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + "Detalhes: " + ex.InnerException, "Ok");
+                string details = ex.InnerException?.Message ?? "";
+                await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + " Detalhes: " + details, "Ok");
             }
         }
 
