@@ -14,7 +14,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
     {
         private UsuarioService uService;
         private static string conexaoAzureStorage = "DefaultEndpointsProtocol=https;AccountName=rpgapistorage;AccountKey=2oSyHIfSq2Pw3zcjOsGE0oI7DQV4PIdzT2wBIQ3Lncvj4E2FRvSd3t3pPVwMxlz0pfk1lUZVc6CZ+AStOFENCw==;EndpointSuffix=core.windows.net";
-        private static string container = "arquivos";//nome do container criado
+        private static string container = "arquivos";
 
         public ImagemUsuarioViewModel()
         {
@@ -66,7 +66,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
         }
 
 
-        // preferível: async Task ao invés de async void
+     
         public async Task AbrirGaleria()
         {
             try
@@ -74,11 +74,11 @@ namespace AppRpgEtec.ViewModels.Usuarios
                 FileResult photo = await MediaPicker.Default.PickPhotoAsync();
                 if (photo == null)
                 {
-                    // usuário cancelou — nada a fazer
+                   
                     return;
                 }
 
-                // leia os bytes dentro de um using (stream original será fechado)
+
                 byte[] fileBytes;
                 using (var sourceStream = await photo.OpenReadAsync())
                 using (var ms = new MemoryStream())
@@ -87,17 +87,16 @@ namespace AppRpgEtec.ViewModels.Usuarios
                     fileBytes = ms.ToArray();
                 }
 
-                // guarde na propriedade (você já tem a propriedade Foto como byte[])
                 Foto = fileBytes;
 
-                // crie a ImageSource com uma factory que gera um MemoryStream novo a partir dos bytes
+     
                 FonteImagem = ImageSource.FromStream(() => new MemoryStream(fileBytes));
 
-                // notifique propriedades (supondo que FonteImagem tem setter com OnPropertyChanged)
+               
             }
             catch (Exception ex)
             {
-                // ex.InnerException pode ser null
+                
                 string details = ex.InnerException?.Message ?? "";
                 await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + " Detalhes: " + details, "Ok");
             }
@@ -158,7 +157,7 @@ namespace AppRpgEtec.ViewModels.Usuarios
 
                 Foto = fileBytes;
 
-                // ✅ Cria uma nova instância de stream a cada acesso
+               
                 FonteImagem = ImageSource.FromStream(() => new MemoryStream(fileBytes));
             }
             catch (Exception ex)
