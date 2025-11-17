@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppRpgEtec.Views.Personagens.ListagemView"
-             xlmns:conv="clr-namespace:AppRpgEtec.Converters"
+             xmlns:conv="clr-namespace:AppRpgEtec.Converters"
              Title="ListagemView">
     <Shell.TitleView>
         <Button Command="{Binding NovoPersonagemCommand}" Text="Novo" HorizontalOptions="End"></Button>

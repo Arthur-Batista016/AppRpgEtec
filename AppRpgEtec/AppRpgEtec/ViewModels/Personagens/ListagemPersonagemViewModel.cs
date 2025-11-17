@@ -113,9 +113,9 @@ namespace AppRpgEtec.ViewModels.Personagens
             await pService.PutZerarRankingAsync(personagem);
         }
 
-        public async Task ExecutarZerarRankingRestaurarVidasGeral(Personagem personagem)
+        public async Task ExecutarZerarRankingRestaurarVidasGeral()
         {
-            await pService.PutZerarRankingRestaurarVidasGeralAsync(personagem);
+            await pService.PutZerarRankingRestaurarVidasGeralAsync();
         }
 
         public async void ProcessarOpcaoRespondidaAsync(Personagem personagem, string result)
