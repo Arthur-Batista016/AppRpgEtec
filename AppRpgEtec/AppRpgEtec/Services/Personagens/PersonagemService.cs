@@ -60,7 +60,29 @@ namespace AppRpgEtec.Services.Personagens
             return listaPersonagens;
         }
 
+        public async Task<int> PutRestaurarPontosAsync(Personagem p)
+        {
+            string urlComplementar = $"/RestaurarPontosVida";
+            
+            var result = await _request.PutAsync(apiUrlBase + urlComplementar, p, _token);
+            return result;
+        }
 
+        public async Task<int> PutZerarRankingAsync(Personagem p)
+        {
+            string urlComplementar = $"/ZerarRanking";
+
+            var result = await _request.PutAsync(apiUrlBase + urlComplementar, p, _token);
+            return result;
+        }
+
+        public async Task<int> PutZerarRankingRestaurarVidasGeralAsync(Personagem p)
+        {
+            string urlComplementar = $"/ZerarRankingRestaurarVidas";
+
+            var result = await _request.PutAsync(apiUrlBase + urlComplementar, new Personagem(), _token);
+            return result;
+        }
 
 
 

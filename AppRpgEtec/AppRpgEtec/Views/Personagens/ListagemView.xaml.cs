@@ -1,3 +1,4 @@
+using AppRpgEtec.Models;
 using AppRpgEtec.ViewModels.Personagens;
 
 namespace AppRpgEtec.Views.Personagens;
@@ -18,5 +19,38 @@ public partial class ListagemView : ContentPage
     {
         base.OnAppearing();
         _ = viewModel.ObterPersonagens();
+    }
+
+    public async Task ExibirOpcoesAsync(Personagem personagem)
+    {
+        try
+        {
+            personagemSelecionado = null;
+            string result = string.Empty;
+
+            if (personagem.PontosVida > 0)
+            {
+                result = await Application.Current.MainPage
+                    .DisplayActionSheet("Opçoes para o personagem " + personagem.Nome,
+                    "Cancelar",
+                    "Editar Personagem",
+                    "Restaurar Pontos de Vida",
+                    "Zerar Ranking do Personagem",
+                    "Remover Personagem");
+            }
+            else
+            {
+                result = await Application.Current.MainPage
+                    .DisplayActionSheet("Opções para o personagem " + personagem.Nome,
+                    "Cancelar",
+                    "Restaurar Pontos de Vida");
+            }
+            if (result == null)
+                ProcessarOpcaoRespondidaAsync(personagem, result);
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert("Ops...", ex.Message, "Ok");
+        }
     }
 }
