@@ -46,12 +46,17 @@ namespace AppRpgEtec.ViewModels.Disputas
             DisputaComArmaCommand = new Command(async () => { await ExecutarDisputaArmada(); });
 
             DisputaComHabilidadeCommand = new Command(async () => { await ExecutarDisputaHabilidades(); });
+
+            DisputaGeralCommand = new Command(async () => { await ExecutarDisputaGeral(); });
         }
 
         public ICommand PesquisarPersonagensCommand { get; set; }
 
         public ICommand DisputaComHabilidadeCommand { get; set; }
         public ICommand DisputaComArmaCommand { get; set; }
+        public ICommand DisputaGeralCommand { get; set; }
+
+
 
 
         public string DescricaoPersonagemAtacante
@@ -222,7 +227,7 @@ namespace AppRpgEtec.ViewModels.Disputas
 
 
 
-        private async Task ExecutarDisputaArmada()
+        private async Task ExecutarDisputaGeral()
         {
             try{
                 ObservableCollection<Personagem> lista = await pServivce.GetPersonagensAsync();
